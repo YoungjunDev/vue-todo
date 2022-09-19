@@ -2,7 +2,7 @@
   <div>
     <transition-group name="list" tag="ul">
       <li
-        v-for="(todoItem, idx) in propsdata"
+        v-for="(todoItem, idx) in this.$store.state.todoItems"
         v-bind:key="todoItem.item"
         class="shadow"
       >
@@ -24,14 +24,15 @@
 
 <script>
 export default {
-  props: ["propsdata"],
   methods: {
     removeTodo(todoItem, idx) {
       // console.log(todoItem, idx);
-      this.$emit("removeItem", todoItem, idx);
+      // this.$emit("removeItem", todoItem, idx);
+      this.$store.commit("removeOneItem", {todoItem, idx});
     },
     toggleComplete(todoItem, idx) {
-      this.$emit('toggleItem',todoItem, idx);
+      // this.$emit("toggleItem", todoItem, idx);
+      this.$store.commit("toggleOneItem", {todoItem, idx});
     }
   }
 };
@@ -72,11 +73,12 @@ li {
 }
 
 /* 리스트 아이템 트랜지션 효과 */
-.list-enter-active, .list-leave-active {
-    transition: all 1s;
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
 }
 .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
-    opacity: 0;
-    transform: translateY(30px);
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>

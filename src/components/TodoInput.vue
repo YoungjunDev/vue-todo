@@ -40,7 +40,9 @@ export default {
       if (this.newTodoItem !== "") {
         // console.log(this.newTodoItem);
         // this.$emit('이벤트이름',인자1,인자2...);
-        this.$emit("addTodoItem", this.newTodoItem);
+        // this.$emit("addTodoItem", this.newTodoItem);
+        // const text = this.newTodoItem,trim();
+        this.$store.commit('addOneItem', this.newTodoItem);
         this.clearInput();
       } else {
         this.showModal = !this.showModal;
