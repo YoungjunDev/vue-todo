@@ -2,19 +2,19 @@
   <div>
     <transition-group name="list" tag="ul">
       <li
-        v-for="(todoItem, idx) in this.$store.state.todoItems"
+        v-for="(todoItem, idx) in this.todoItems"
         v-bind:key="todoItem.item"
         class="shadow"
       >
         <i
           class="checkBtn fa-solid fa-check"
           v-bind:class="{ checkBtnCompleted: todoItem.completed }"
-          v-on:click="toggleComplete(todoItem, idx)"
+          v-on:click="toggleComplete({todoItem, idx})"
         ></i>
         <span v-bind:class="{ textCompleted: todoItem.completed }">{{
           todoItem.item
         }}</span>
-        <span class="removeBtn" v-on:click="removeTodo(todoItem, idx)">
+        <span class="removeBtn" v-on:click="removeTodo({ todoItem, idx })">
           <i class="fa-solid fa-trash-can"></i>
         </span>
       </li>
@@ -23,17 +23,18 @@
 </template>
 
 <script>
+import { mapGetters, mapState, mapMutations } from "vuex";
+
 export default {
   methods: {
-    removeTodo(todoItem, idx) {
-      // console.log(todoItem, idx);
-      // this.$emit("removeItem", todoItem, idx);
-      this.$store.commit("removeOneItem", {todoItem, idx});
-    },
-    toggleComplete(todoItem, idx) {
-      // this.$emit("toggleItem", todoItem, idx);
-      this.$store.commit("toggleOneItem", {todoItem, idx});
-    }
+    ...mapMutations({
+      removeTodo: "removeOneItem", //인자를 작성하지않아도 암묵적으로 template단에 인자가 있다면 넘기게된다.
+      toggleComplete: "toggleOneItem",
+    })
+  },
+  computed: {
+    ...mapState(["todoItems"]),
+    ...mapGetters(["storedTodoItems"])
   }
 };
 </script>
