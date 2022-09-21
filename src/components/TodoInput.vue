@@ -43,6 +43,7 @@ export default {
         // this.$emit("addTodoItem", this.newTodoItem);
         // const text = this.newTodoItem,trim();
         this.$store.commit('addOneItem', this.newTodoItem);
+
         this.clearInput();
       } else {
         this.showModal = !this.showModal;

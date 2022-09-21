@@ -1,8 +1,8 @@
 <template>
   <div>
     <transition-group name="list" tag="ul">
-      <li
-        v-for="(todoItem, idx) in this.todoItems"
+      <li               
+        v-for="(todoItem, idx) in this.$store.state.todoApp.todoItems"
         v-bind:key="todoItem.item"
         class="shadow"
       >
@@ -34,6 +34,7 @@ export default {
   },
   computed: {
     ...mapState(["todoItems"]),
+    // ...mapState('todoApp',["todoItems"]),
     ...mapGetters(["storedTodoItems"])
   }
 };
